@@ -33,18 +33,18 @@ function Offre (){
         axios.delete(`http://localhost:8000/api/offres/${id_agence}/${id}/delete`)
         .then(res => {
 
-            alert(res.data.message);
+            swal("Supprimée","Offre est bien supprimée","success");
             thisClicked.closest("tr").remove();
 
         })
         .catch(function(error) {
            
             if(error.response.status === 404){
-                alert(error.response.data.message) 
+                swal("Erreur",error.response.data.message,"warning"); 
                 thisClicked.innerText = "Supprimer";
             }
             if(error.response.status === 500){
-                alert(error.response.data) 
+                swal("Erreur",error.response.data.message,"warning")
                 setLoading(false);
             } 
         });
@@ -91,7 +91,7 @@ function Offre (){
                         <div className="card-header">
                             <h4>Liste des offres
                                 <Link to="/mesdemandes" className="btn btn-dark ms-2 float-end"><i class="ri-folder-open-line"></i> Consulter demandes de réservation</Link>
-                                <Link to="/mesoffres/create" className="btn btn-outline-dark float-end"><i class="ri-add-line"></i>Ajouter un offre </Link> 
+                                <Link to="/mesoffres/create" className="btn btn-outline-dark float-end"><i class="ri-add-line"></i>Ajouter une offre </Link> 
                             </h4>
                         </div>
                          <div className="card-body">

@@ -69,8 +69,11 @@ function NavBar(){
                     xhr.send();
 
                     
-                    swal("Au revoir",res.data.message,"success");
-                    navigate('/');
+                    swal("Au revoir",res.data.message,"success").then((confirmed) => {
+                        if (confirmed) {
+                            navigate('/');
+                          window.location.reload();
+                        }});
                 
                   
 
@@ -89,7 +92,7 @@ function NavBar(){
             // <ul className="navabar-nav">
             
                 <li className="nav-item">
-                <Link className="nav-link" to="/login">Login</Link>
+                <Link className="nav-link" to="/login"><i class="ri-login-box-line "></i> Se connecter</Link>
                 </li>
 
             /* </ul>  */
@@ -110,7 +113,7 @@ function NavBar(){
                     <Link className="nav-link" to="/profile">Profile</Link>
                     </li>
                     <li className="nav-item">
-                        <button type="button" className="nav-link btn btn-light btn-sm text-red float-right" onClick={logoutSubmit}>Logout</button>
+                        <button type="button" className="nav-link btn btn-outline-light btn-sm  float-right" onClick={logoutSubmit}><i class=" ri-logout-box-r-line"></i> Se déconnecter</button>
                     </li>
                 </>
             )
@@ -125,7 +128,7 @@ function NavBar(){
                     <Link className="nav-link" to="/profile">Profile</Link>
                     </li>
                     <li className="nav-item">
-                        <button type="button" className="nav-link btn btn-light btn-sm text-red float-right" onClick={logoutSubmit}>Logout</button>
+                        <button type="button" className="nav-link btn btn-light btn-sm text-red float-right" onClick={logoutSubmit}><i class="ri-logout-box-r-line"></i> Se déconnecter</button>
                     </li>
                 </>
             )
@@ -139,19 +142,6 @@ function NavBar(){
         <nav className="navbar navbar-expand-lg bg-body-tertiary shadow">
         <div className="container">
             <Link className="navbar-brand" to="/">RentIn</Link>
-            
-            <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li className="nav-item">
-                <Link className="nav-link active" to="/">Home {agence}</Link>
-                </li>
-                
-                <li className="nav-item">
-                <Link className="nav-link" to="/offres">Offres</Link>
-                </li>
-
-                
-
-            </ul>
             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
             </button>
@@ -159,11 +149,11 @@ function NavBar(){
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
                 {/* <li className="nav-item">
                 <Link className="nav-link active" to="/">Home {agence}</Link>
-                </li>
+                </li>*/}
                 
                 <li className="nav-item">
                 <Link className="nav-link" to="/offres">Offres</Link>
-                </li> */}
+                </li> 
 
                 
                 {AuthButtons}

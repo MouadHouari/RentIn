@@ -29,7 +29,7 @@ class VoitureController extends Controller
 
             ], 404);
          }
-       
+
     }
 
     public function store(Request $request){
@@ -37,8 +37,8 @@ class VoitureController extends Controller
             'imei' => 'required|max:9',
             'modele' => 'required|max:191',
             'marque' => 'required|max:191',
-            // 'photo1' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            // 'photo2' => 'required|image|mimes:jpeg,png,jpg|max:2048',
+            'photo1' => 'required',
+            'photo2' => 'required',
             'boitedevitesse' => 'required|max:20',
             'annee' => 'required|max:191',
             'carburant' => 'required|max:191',
@@ -47,26 +47,53 @@ class VoitureController extends Controller
         ]);
 
         if($validator->fails()){
-            
+
             return response()->json([
                 'status' => 422 ,
                 'errors' => $validator->messages()
-    
+
             ], 422);
         }else{
-            $filename1=$filename2="";
-            if($request->hasFile('photo1')){
-                    $file1 = $request->file('photo1');
-                    $extension1 = $file1->getClientOriginalExtension();
-                    $filename1= time().'.'.$extension1;
-                    $file1->move('uploads/voitures/'.$filename1);
+            if($request->input('photo1')){
+                $file = $request->input('photo1');
+                  $filename = time().rand(). '.png';
+                  $userFile = $request->input('imei');
+                  $uploadsPath = public_path('uploads/voitures');
+                  $publicPath = $uploadsPath . '/'. $userFile . '/' . $filename;
+                $exactpath = '/uploads/voitures/'.$userFile . '/' . $filename;
+                if (!file_exists(dirname($publicPath))) {
+                        mkdir(dirname($publicPath), 0755, true);
+                }
+                if(file_put_contents($publicPath, file_get_contents($file))){
+                    $response["success"] = true;
+                    $response["path"] = $exactpath;
+                }
+                else{
+                $response["success"] = false;
+                   $response["message"] = "Failed! image(s) not uploaded";
+                  }
             }
-            if($request->hasFile('photo2')){
-                    $file2 = $request->file('photo2');
-                    $extension2 = $file2->getClientOriginalExtension();
-                    $filename2= time().'.'.$extension2;
-                    $file2->move('uploads/voitures/'.$filename2);
+
+            if($request->input('photo2')){
+                $file2 = $request->input('photo2');
+                    $filename2 = time().rand(). '.png';
+                    $userFile2 = $request->input('imei');
+                    $uploadsPath2 = public_path('uploads/voitures');
+                    $publicPath2 = $uploadsPath2 . '/'. $userFile2 . '/' . $filename2;
+                $exactpath2 = '/uploads/voitures/'.$userFile2 . '/' . $filename2;
+                if (!file_exists(dirname($publicPath2))) {
+                        mkdir(dirname($publicPath2), 0755, true);
+                }
+                if(file_put_contents($publicPath2, file_get_contents($file2))){
+                    $response["success"] = true;
+                    $response["path"] = $exactpath2;
+                }
+                else{
+                $response["success"] = false;
+                    $response["message"] = "Failed! image(s) not uploaded";
+                    }
             }
+
             $voiture = Voiture::create([
                 'imei' => $request->imei,
                 'modele' => $request->modele,
@@ -76,9 +103,9 @@ class VoitureController extends Controller
                 'carburant' => $request->carburant,
                 'portes' => $request->portes,
                 'agence_id' => $request->agence_id,
-                'photo1' => 'uploads/voitures/'.$filename1,
-                'photo2' => 'uploads/voitures/'.$filename2,
-                
+                'photo1' => $exactpath,
+                'photo2' => $exactpath2,
+
             ]);
 
             if($voiture){
@@ -101,7 +128,7 @@ class VoitureController extends Controller
     public function show($id){
         $voiture = Voiture::find($id);
         if($voiture){
-             
+
             return response()->json([
                 'status' => 200,
                 'voiture' => $voiture
@@ -118,7 +145,7 @@ class VoitureController extends Controller
     public function edit($id){
         $voiture = Voiture::find($id);
         if($voiture){
-             
+
             return response()->json([
                 'status' => 200,
                 'voiture' => $voiture
@@ -130,11 +157,11 @@ class VoitureController extends Controller
             ],404);
         }
 
-    } 
+    }
 
     public function update(Request $request, int $id){
 
-        
+
         $validator = Validator::make($request->all(), [
             'imei' => 'required|max:9',
             'modele' => 'required|max:191',
@@ -149,11 +176,11 @@ class VoitureController extends Controller
         ]);
 
         if($validator->fails()){
-            
+
             return response()->json([
                 'status' => 422 ,
                 'errors' => $validator->messages()
-    
+
             ], 422);
         }else{
 
@@ -161,19 +188,46 @@ class VoitureController extends Controller
 
 
             if($voiture){
-                $filename1=$filename2="";
-            if($request->hasFile('photo1')){
-                    $file1 = $request->file('photo1');
-                    $extension1 = $file1->getClientOriginalExtension();
-                    $filename1= time().'.'.$extension1;
-                    $file1->move('uploads/voitures/'.$filename1);
-            }
-            if($request->hasFile('photo2')){
-                    $file2 = $request->file('photo2');
-                    $extension2 = $file2->getClientOriginalExtension();
-                    $filename2= time().'.'.$extension2;
-                    $file2->move('uploads/voitures/'.$filename2);
-            }
+
+                if($request->input('photo1')){
+                    $file = $request->input('photo1');
+                      $filename = time().rand(). '.png';
+                      $userFile = $request->input('imei');
+                      $uploadsPath = public_path('uploads/voitures');
+                      $publicPath = $uploadsPath . '/'. $userFile . '/' . $filename;
+                    $exactpath = '/uploads/voitures/'.$userFile . '/' . $filename;
+                    if (!file_exists(dirname($publicPath))) {
+                            mkdir(dirname($publicPath), 0755, true);
+                    }
+                    if(file_put_contents($publicPath, file_get_contents($file))){
+                        $response["success"] = true;
+                        $response["path"] = $exactpath;
+                    }
+                    else{
+                    $response["success"] = false;
+                       $response["message"] = "Failed! image(s) not uploaded";
+                      }
+                }
+
+                if($request->input('photo2')){
+                    $file2 = $request->input('photo2');
+                        $filename2 = time().rand(). '.png';
+                        $userFile2 = $request->input('imei');
+                        $uploadsPath2 = public_path('uploads/voitures');
+                        $publicPath2 = $uploadsPath2 . '/'. $userFile2 . '/' . $filename2;
+                    $exactpath2 = '/uploads/voitures/'.$userFile2 . '/' . $filename2;
+                    if (!file_exists(dirname($publicPath2))) {
+                            mkdir(dirname($publicPath2), 0755, true);
+                    }
+                    if(file_put_contents($publicPath2, file_get_contents($file2))){
+                        $response["success"] = true;
+                        $response["path"] = $exactpath2;
+                    }
+                    else{
+                    $response["success"] = false;
+                        $response["message"] = "Failed! image(s) not uploaded";
+                        }
+                }
                 $voiture -> update([
                     'imei' => $request->imei,
                     'modele' => $request->modele,
@@ -183,8 +237,8 @@ class VoitureController extends Controller
                     'carburant' => $request->carburant,
                     'portes' => $request->portes,
                     'agence_id' => $request->agence_id,
-                    'photo1' => 'uploads/voitures/'.$filename1,
-                    'photo2' => 'uploads/voitures/'.$filename2,
+                    'photo1' => $exactpath,
+                    'photo2' => $exactpath2,
                 ]);
 
                 return response()->json([

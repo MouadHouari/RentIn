@@ -95,7 +95,7 @@ const Rent = () => {
 
     }
 
-  const img = "/"+offre.photo1;
+  const img = `http://localhost:8000${offre.photo1}`;
 
   const submitHandler = (e) =>{
     e.preventDefault();

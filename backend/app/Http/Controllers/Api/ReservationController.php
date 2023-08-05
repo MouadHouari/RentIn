@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Validator;
 
 class ReservationController extends Controller
 {
-   
+
     public function index ($id_agence,$id_client){
         if($id_agence==0){
             $reservations = DB::table('reservations')
@@ -23,25 +23,25 @@ class ReservationController extends Controller
               ->join('voitures', 'reservations.voiture_id', '=', 'voitures.id')
               ->join('users', 'reservations.client_id', '=', 'users.id')
               ->select('reservations.*',
-              'voitures.imei','voitures.modele', 'voitures.marque', 'voitures.photo1', 'voitures.photo2', 'voitures.boitedevitesse', 'voitures.annee', 'voitures.carburant','voitures.portes', 
+              'voitures.imei','voitures.modele', 'voitures.marque', 'voitures.photo1', 'voitures.photo2', 'voitures.boitedevitesse', 'voitures.annee', 'voitures.carburant','voitures.portes',
               )
               ->where('users.id', '=', $id_client)
               ->get();
         }
         else{
-            
+
             $reservations = DB::table('reservations')
             ->join('offres', 'reservations.offre_id', '=', 'offres.id')
             ->join('voitures', 'reservations.voiture_id', '=', 'voitures.id')
             ->join('users', 'reservations.agence_id', '=', 'users.id')
             ->select('reservations.*',
-            'voitures.imei','voitures.modele', 'voitures.marque', 'voitures.photo1', 'voitures.photo2', 'voitures.boitedevitesse', 'voitures.annee', 'voitures.carburant','voitures.portes', 
+            'voitures.imei','voitures.modele', 'voitures.marque', 'voitures.photo1', 'voitures.photo2', 'voitures.boitedevitesse', 'voitures.annee', 'voitures.carburant','voitures.portes',
             )
             ->where('users.id', '=', $id_agence)
             ->get();
         }
        if($reservations->count() > 0){
-        
+
             return response()->json([
             'status' => '200' ,
             'reservations' => $reservations
@@ -54,7 +54,7 @@ class ReservationController extends Controller
 
             ], 404);
          }
-       
+
     }
 
     public function store(Request $request){
@@ -75,11 +75,11 @@ class ReservationController extends Controller
         ]);
 
         if($validator->fails()){
-            
+
             return response()->json([
                 'status' => 422 ,
                 'errors' => $validator->messages()
-    
+
             ], 422);
         }else{
             $reservation = Reservation::create([
@@ -98,7 +98,7 @@ class ReservationController extends Controller
                 'message' => $request->message,
                 'totale' => $request->totale,
                 'etat' => $request->etat,
-                
+
             ]);
 
             if($reservation){
@@ -108,7 +108,6 @@ class ReservationController extends Controller
                     'message' => 'Réservation est bien ajoutée!!'
                 ],200);
             }else{
-
                 return response()->json([
                     'status' => 500,
                     'message' => 'Erreur Réservation non ajoutée!!'
@@ -120,13 +119,13 @@ class ReservationController extends Controller
 
     public function show($id_agence,$id){
         if($id_agence==0){
-            
+
         $reservation = DB::table('reservations')
           ->join('voitures', 'reservations.voiture_id', '=', 'voitures.id')
           ->join('users', 'reservations.agence_id', '=', 'users.id')
           ->select('reservations.*', 'voitures.imei','voitures.modele', 'voitures.marque', 'voitures.photo1', 'voitures.photo2', 'voitures.boitedevitesse', 'voitures.annee', 'voitures.carburant','voitures.portes', )
           ->where('reservations.id', '=', $id)
-          ->get(); 
+          ->get();
     }
     else{
 
@@ -139,7 +138,7 @@ class ReservationController extends Controller
         ->get();}
 
         if($reservation->count() != 0){
-             
+
             return response()->json([
                 'status' => 200,
                 'reservation' => $reservation,
@@ -157,7 +156,7 @@ class ReservationController extends Controller
 
         $reservation = Reservation::find($id);
         if($reservation->count() != 0){
-            if($reservation->agence_id==$id_agence){ 
+            if($reservation->agence_id==$id_agence){
                 return response()->json([
                     'status' => 200,
                     'reservation' => $reservation
@@ -175,22 +174,22 @@ class ReservationController extends Controller
             ],404);
         }
 
-    } 
+    }
 
     public function update(Request $request, int $id_agence, int $id){
 
-        
+
         $validator = Validator::make($request->all(), [
-           
+
             'etat' => 'required|max:15',
         ]);
 
         if($validator->fails()){
-            
+
             return response()->json([
                 'status' => 422 ,
                 'errors' => $validator->messages()
-    
+
             ], 422);
         }else{
 
@@ -229,7 +228,7 @@ class ReservationController extends Controller
         $reservation = Reservation::find($id);
         if($reservation){
             if($reservation->agence_id==$id_agence){
-                
+
                 $reservation -> delete();
                 return response()->json([
                     'status' => 200,

@@ -1,18 +1,31 @@
+# RentIn 
 
-<img alt="Home page" src="Frontend/public/uploads/home.png"><br/><br/><br/>
+Lors de notre projet,nous cherchons à lier entre les clients et les agences de loca-
+tion de voitures grâce à une plateforme web qui offre au client une solution simple
+et flexible pour réserver et louer un véhicule en ligne,et aux agences une solution de
+gestion des offres et des véhicules,avec un système de pistage GPS pour une sécurité acrue.
+Pour faire,nous avons utilisé **React** et **Laravel** pour la réalisation de la plateforme et **Traccar** pour la localisation GPS.
 
-<img alt="offres page" src="Frontend/public/uploads/offres.png"><br/><br/><br/>
 
-<img alt="voitures page" src="Frontend/public/uploads/mesvoitures.png"><br/><br/><br/>
 
-<img alt="GPS page" src="Frontend/public/uploads/traccar.png"><br/><br/><br/>
+# Plateforme 
 
-<img alt="Reserveation page" src="Frontend/public/uploads/rent1.png"><br/><br/><br/>
+Des pages principaux de notre plateforme
 
-<img alt="Reservatoin form page" src="Frontend/public/uploads/rent2.png"><br/><br/><br/>
+![home.PNG](https://github.com/MouadHouari/RentIn/blob/main/frontend/public/uploads/home.PNG?raw=true)
 
-<img alt=" page" src="Frontend/public/uploads/mesdemandes.png"><br/><br/><br/>
+![offres.PNG](https://github.com/MouadHouari/RentIn/blob/main/frontend/public/uploads/offres.PNG?raw=true)
 
-<img alt="Cars page" src="Frontend/public/uploads/clientprofile1.png"><br/><br/><br/>
+![mesvoitures.PNG](https://github.com/MouadHouari/RentIn/blob/main/frontend/public/uploads/mesvoitures.PNG?raw=true)
 
-<img alt="Cars page" src="Frontend/public/uploads/clientprofile2.png"><br/><br/><br/>
+![traccar.PNG](https://github.com/MouadHouari/RentIn/blob/main/frontend/public/uploads/traccar.PNG?raw=true)
+
+![rent1.PNG](https://github.com/MouadHouari/RentIn/blob/main/frontend/public/uploads/rent1.PNG?raw=true)
+![rent2.PNG](https://github.com/MouadHouari/RentIn/blob/main/frontend/public/uploads/rent2.PNG?raw=true)
+
+![mesdemandes.PNG](https://github.com/MouadHouari/RentIn/blob/main/frontend/public/uploads/mesdemandes.PNG?raw=true)
+
+![clientprofile1.PNG](https://github.com/MouadHouari/RentIn/blob/main/frontend/public/uploads/clientprofile1.PNG?raw=true)
+![clientprofile2.PNG](https://github.com/MouadHouari/RentIn/blob/main/frontend/public/uploads/clientprofile2.PNG?raw=true)
+
+

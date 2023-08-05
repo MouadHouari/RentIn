@@ -25,14 +25,14 @@ const CarCard = ({ props }) => {
               objectFit="cover"
               h={"215px"}
               w={"full"}
-              src={props.photo2}
+              src={`http://localhost:8000${props.photo2}`}
             ></Image>
             <Image
               className="second"
               objectFit="cover"
               h={"215px"}
               w={"full"}
-              src={props.photo1}
+              src={`http://localhost:8000${props.photo1}`}
             ></Image>
           </Box>
         </div>

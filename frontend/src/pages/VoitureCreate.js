@@ -17,8 +17,8 @@ function VoitureCreate(){
         imei: '',
         marque: '',
         modele: '',
-        // photo1: '',
-        // photo2: '',
+        photo1: '',
+        photo2: '',
         annee: '',
         boitedevitesse: '',
         carburant: '',
@@ -27,14 +27,29 @@ function VoitureCreate(){
     })
 
     const [picture, setPicture] = useState(null);
+    const [picture2, setPicture2] = useState(null);
     const handeleInput = (e) => {
         e.persist();
         setVoiture({...voiture, [e.target.name]: e.target.value  })
     }
     const handeleImage = (e) => {
-        setPicture(e.target.files[0]);
+        if (e.target.files && e.target.files[0]) {
+            let reader = new FileReader();
+            reader.onload = (e) => {
+              setPicture(e.target.result);
+            };
+            reader.readAsDataURL(e.target.files[0]);
+          }
     }
-    
+    const handeleImage2 = (e) => {
+        if (e.target.files && e.target.files[0]) {
+            let reader = new FileReader();
+            reader.onload = (e) => {
+              setPicture2(e.target.result);
+            };
+            reader.readAsDataURL(e.target.files[0]);
+          }
+    }
 
 
     //---------Creation de la voiture dans traccar------------//
@@ -73,6 +88,7 @@ function VoitureCreate(){
 
         const formData = new FormData();
         formData.append('photo1',picture);
+        formData.append('photo2',picture2);
         formData.append('imei',voiture.imei);
         formData.append('marque',voiture.marque);
         formData.append('modele',voiture.modele);
@@ -81,6 +97,7 @@ function VoitureCreate(){
         formData.append('carburant',voiture.carburant);
         formData.append('portes',voiture.portes);
         formData.append('agence_id',voiture.agence_id);
+
         // const data = {
         //     imei: voiture.imei,
         //     marque: voiture.marque,
@@ -159,12 +176,12 @@ function VoitureCreate(){
                                         </FormGroup>
                                         <FormGroup className="col-md-4 form-group ms-5 mb-3">
                                             <label>Photo 1:</label>
-                                            <input type="file" name="photo1"  onChange={handeleImage} className="form-control"/>
+                                            <input type="file" name="photo1" accept="image/*"  onChange={handeleImage} className="form-control"/>
                                             <span className="text-danger">{inputErrorList.photo1}</span>
                                         </FormGroup>
                                         <FormGroup className="col-md-4 form-group ms-5 mb-3">
                                             <label>Photo 2:</label>
-                                            <input type="file" name="photo1"  onChange={handeleImage} className="form-control"/>
+                                            <input type="file" name="photo2"  onChange={handeleImage2} className="form-control"/>
                                             <span className="text-danger">{inputErrorList.photo2}</span>
                                         </FormGroup>
                                         <FormGroup className="d-inline-block mb-3 me-5 ms-5 ">

@@ -29,7 +29,7 @@ class RegisterController extends BaseController
     public function show($id){
         $user = User::find($id);
         if($user){
-             
+
             return response()->json([
                 'status' => 200,
                 'user' => $user
@@ -52,10 +52,10 @@ class RegisterController extends BaseController
             'c_password' => 'required|same:password',
         ]);
 
-        if ($validator->fails()) {    
+        if ($validator->fails()) {
             return response()->json([
                 'validation_errors'=>$validator->messages(),
-            ]); 
+            ]);
         }
         else{
             $user = User::create([
@@ -66,7 +66,7 @@ class RegisterController extends BaseController
                 'agence_name'=>$request->agence_name,
                 'password'=>Hash::make($request->password),
                 'c_password'=>$request->c_password,
-                
+
             ]);
 
             $token = $user->createToken($user->email.'_Token')->plainTextToken;
@@ -76,7 +76,7 @@ class RegisterController extends BaseController
                 'username'=>$user->name,
                 'token'=>$token,
                 'message'=>'Bien enregistrer',
-            ]);  
+            ]);
         }
 
 
@@ -98,7 +98,7 @@ class RegisterController extends BaseController
         if ($validator->fails()) {
             return response()->json([
                 'validation_errors'=>$validator->messages(),
-            ]); 
+            ]);
         }
         else{
             $user = User::where('email', $request->email)->first();
@@ -107,7 +107,7 @@ class RegisterController extends BaseController
                 return response()->json([
                     'status'=>401,
                     'message'=>'Email ou mot de passe incorrect',
-                ]);  
+                ]);
             }
             else{
                 $token = $user->createToken($user->email.'_Token')->plainTextToken;
@@ -118,7 +118,7 @@ class RegisterController extends BaseController
                     'id'=>$user->id,
                     'token'=>$token,
                     'message'=>'vous êtes bien connecté',
-                ]);  
+                ]);
             }
         }
     }
@@ -131,4 +131,34 @@ class RegisterController extends BaseController
             'message'=>'vous êtes bien déconnecté',
         ]);
     }
+
+    public function update(Request $request,int $id){
+
+            $user = User::find($id);
+
+            if($user){
+                    $user -> update([
+                        'name'=>$request->name,
+                        'email'=>$request->email,
+                        'tel'=>$request->tel,
+                        'agence'=>$request->agence,
+                        'agence_name'=>$request->agence_name,
+                        'password'=>Hash::make($request->password),
+                    ]);
+
+                    return response()->json([
+                        'status' => 200,
+                        'message' => 'Utilisateur bien Modifiée!!'
+                    ],200);
+            }else{
+
+                return response()->json([
+                    'status' => 404,
+                    'message' => 'Utilisateur non trouvée!!'
+                ],404);
+            }
+        }
+
+
+
  }

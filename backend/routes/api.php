@@ -8,18 +8,19 @@ use App\Http\Controllers\Api\VoitureController;
 use App\Http\Controllers\Api\OffreController;
 use App\Http\Controllers\Api\ReservationController;
 
- 
+
 /** ---------Register and Login ----------- */
 
 
 Route::post('register',[RegisterController::class, 'register']);
 Route::post('login',[RegisterController::class, 'login']);
 Route::get('user/{id}', [RegisterController::class, 'show']);
+Route::put('user/{id}/edit',[RegisterController::class, 'update']);
 
 /** -----------Users --------------------- */
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    
+
     Route::post('logout',[RegisterController::class, 'logout']);
 
 });

@@ -14,6 +14,7 @@ function VoitureEdit(){
     const[inputErrorList, setInputErrorList] = useState({});
     const[voiture, setVoiture] = useState({})
     const [picture, setPicture] = useState([]);
+    const [picture2, setPicture2] = useState([]);
     const[deviceId, setDeviceId]=useState();
 
     useEffect(() => {
@@ -44,9 +45,23 @@ function VoitureEdit(){
         setVoiture({...voiture, [e.target.name]: e.target.value  })
     }
     const handeleImage = (e) => {
-        setPicture({ photo1: e.target.files[0] });
+        if (e.target.files && e.target.files[0]) {
+            let reader = new FileReader();
+            reader.onload = (e) => {
+              setPicture(e.target.result);
+            };
+            reader.readAsDataURL(e.target.files[0]);
+          }
     }
-
+    const handeleImage2 = (e) => {
+        if (e.target.files && e.target.files[0]) {
+            let reader = new FileReader();
+            reader.onload = (e) => {
+              setPicture2(e.target.result);
+            };
+            reader.readAsDataURL(e.target.files[0]);
+          }
+    }
     const updateDevice = (  uniqueId, name) => {
 
         const email = localStorage.getItem('email');
@@ -118,8 +133,8 @@ function VoitureEdit(){
             imei: voiture.imei,
             marque: voiture.marque,
             modele: voiture.modele,
-        // photo1: voiture.photo1,
-        // photo2: voiture.photo1,
+            photo1: picture,
+            photo2: picture2,
             annee: voiture.annee,
             boitedevitesse: voiture.boitedevitesse,
             carburant: voiture.carburant,
@@ -204,7 +219,7 @@ function VoitureEdit(){
                                             </FormGroup>
                                             <FormGroup className="col-md-4 form-group ms-5 mb-3">
                                                 <label>Photo 2:</label>
-                                                <input type="file" name="photo1"  onChange={handeleImage} className="form-control"/>
+                                                <input type="file" name="photo1"  onChange={handeleImage2} className="form-control"/>
                                                 <span className="text-danger">{inputErrorList.photo2}</span>
                                             </FormGroup>
                                             <FormGroup className="d-inline-block mb-3 me-5 ms-5 ">

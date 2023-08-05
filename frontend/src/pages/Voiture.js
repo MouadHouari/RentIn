@@ -197,7 +197,7 @@ function Voiture (){
                 <div className="col-md-12">
                     <div className="card">
                         <div className="card-header">
-                            <h4>Liste de voiture {id_imei}
+                            <h4>Liste des voitures {id_imei}
                                 <button   onClick={locateVehicules} className="btn btn-success  float-end"><i className="ri-road-map-line me-1"></i>Localiser mes voitures </button>
                                 <Link to="/voitures/create" className="btn btn-outline-dark me-3 float-end"><i class="ri-add-line me-1"></i>Ajouter voiture </Link>
                             </h4>
